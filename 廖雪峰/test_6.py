@@ -18,11 +18,15 @@ def long_time_task(name):
     end = time.time()
     print("Task %s runs %0.2f seconds."%(name,(end-start)))
 
-import subprocess
+import subprocess,os
+# os.chdir(r'C:\Users\Administrator\Desktop\apache-jmeter-4.0\bin')
 def ABCD():
     print("$ nslookup www.python.org")
     r = subprocess.call(['nslookup','www.python.org'])
     print("Exit code:%s" %r)
+    r1 = subprocess.call(['jmeter.bat'])
+    # print(r1)
+    # print(str(r1).encode("gb2312"))
 
 """进程之间的通信Queue"""
 def write(q):
@@ -122,6 +126,7 @@ if __name__ == '__main__':
     # t1.join()
 
     print(multiprocessing.cpu_count())
+    ABCD()
 
 
 

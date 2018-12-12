@@ -77,8 +77,96 @@ def func_6():
         c[ch] = c[ch] + 1
     print(c)
 
+"""hashlib"""
+import hashlib
+def func_7():
+    md5_1 = hashlib.md5()
+    md5_2 = hashlib.md5()
+    md5_1.update('123456'.encode('utf-8'))
+    md5_2.update('ysl2'.encode('utf-8'))
+    print(md5_1.hexdigest())
+    print(len(md5_2.hexdigest()))
+
+"""contextlib"""
+from contextlib import contextmanager
+#很多时候我们希望在某段代码前后自动执行特定的代码
+# 代码的执行顺序是：
+# 1.with语句首先执行yield之前的语句，因此打印出<h1>；
+# 2.yield调用会执行with语句内部的所有语句，因此打印出hello和world；
+# 3.最后执行yield之后的语句，打印出</h1>
+@contextmanager
+def tag(name):
+    print("<%s>"%name)
+    yield
+    print("</%s>"%name)
+def func_8():
+    with tag("h1"):
+        print("hello")
+        print("ysl")
+
+"""urllib"""
+from urllib import request
+import json
+#decode-->字节转字符   encode-->字符转字节
+def func_9(url):
+    with request.urlopen(url) as f:
+        context = f.read()
+        context = json.loads(context.decode('utf-8'))
+    print(context)
+
+"""HTMLParser"""
+from html.parser import HTMLParser
+import re
+#解析网页
+class MyHTMLParser(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.j_time = False
+        self.j_title = False
+        self.j_location = False
+        self.j_year = False
+        self.all_info = []
+
+    def handle_starttag(self, tag, attrs):
+        if tag == 'span' and ('class','say-no-more') in attrs:
+            self.j_year = True
+        elif tag == 'span' and ('class','event-location') in attrs:
+            self.j_location = True
+        elif tag == 'h3' and ('class','event-title') in attrs:
+            self.j_title = True
+        elif tag == 'time':
+            self.j_time = True
+
+    def handle_data(self, data):
+        if self.j_year is True:
+            if re.match(r'[0-9]',data.strip()):
+                self.all_info.append(dict(年份=data))
+        elif self.j_title is True:
+            self.all_info.append(dict(主题=data))
+        elif self.j_location is True:
+            self.all_info.append(dict(位置=data))
+        elif self.j_time is True:
+            self.all_info.append(dict(时间=data))
+
+def deal(content):
+    cope = MyHTMLParser()
+    cope.feed(content)
+    count = 0
+    for i in cope.all_info:
+        count+= 1
+        print(i)
+        if count % 4 == 0:
+            print("---------------------------------------")
+
+
 if __name__ == '__main__':
     # func_5()
     # f = FIFODict(3)
     # f.append('1','a')
-    func_6()
+    # func_9("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%202151330&format=json")
+    # print(type("s".encode()))
+    # print(type(b't'.decode('utf-8')))
+    # pass
+    with request.urlopen("https://www.python.org/events/python-events/") as f:
+        Data = f.read()
+    print(deal(Data.decode('utf-8')))
