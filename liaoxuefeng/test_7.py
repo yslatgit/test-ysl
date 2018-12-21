@@ -82,7 +82,7 @@ import hashlib
 def func_7():
     md5_1 = hashlib.md5()
     md5_2 = hashlib.md5()
-    md5_1.update('123456'.encode('utf-8'))
+    md5_1.update('yangsonglin@mofanghr.com1234'.encode('utf-8'))
     md5_2.update('ysl2'.encode('utf-8'))
     print(md5_1.hexdigest())
     print(len(md5_2.hexdigest()))
@@ -160,13 +160,13 @@ def deal(content):
 
 
 if __name__ == '__main__':
-    # func_5()
+    func_7()
     # f = FIFODict(3)
     # f.append('1','a')
     # func_9("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20%3D%202151330&format=json")
     # print(type("s".encode()))
     # print(type(b't'.decode('utf-8')))
     # pass
-    with request.urlopen("https://www.python.org/events/python-events/") as f:
-        Data = f.read()
-    print(deal(Data.decode('utf-8')))
+    # with request.urlopen("https://www.python.org/events/python-events/") as f:
+    #     Data = f.read()
+    # print(deal(Data.decode('utf-8')))

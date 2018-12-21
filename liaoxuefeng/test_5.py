@@ -19,6 +19,7 @@ class Student:
         self.name = name
         self.age = age
 
+
 def class_to_json(std):
     return{
         "name":std.name,

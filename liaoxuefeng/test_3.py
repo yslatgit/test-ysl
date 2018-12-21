@@ -8,6 +8,9 @@ class Student:
         self.name = name
         self.score = score
 
+    def __str__(self):
+        return "score:%s"%self.score
+
     def get_grade(self):
         if self.score > 100 or self.score < 0:
             raise ValueError
@@ -37,7 +40,8 @@ class TestStudent(unittest.TestCase):
         s1 = Student("Bart",-1)
         s2 = Student("Lisa",101)
         with self.assertRaises(ValueError):
-            s1.get_grade()
+            # print(self.assertRaises(ValueError))
+            print(s1.get_grade())
         with self.assertRaises(ValueError):
             s2.get_grade()
 
@@ -47,5 +51,4 @@ if __name__ == '__main__':
     # s = Student('ysl',90)
     # print(s.get_grade())
     unittest.main()
-
 

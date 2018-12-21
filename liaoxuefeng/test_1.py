@@ -76,6 +76,9 @@ class Chain:
     def __str__(self):
         return self.__path
 
+    def __call__(self):
+        return "123"
+
     def users(self,user):
         return Chain('%s/%s'%(self.__path,user))
 
@@ -94,7 +97,7 @@ if __name__ == '__main__':
     # print(Fib()[2])
     # f = Fib()
     # print(f.name)
-    # c = Chain()
-    # print(c.users("y").s.l)
+    c = Chain()
+    print(c.users("y"))
     # print(c.y.s.l)
     pass

@@ -4,6 +4,7 @@ class A:
 """***************************************************************常用第三方模块***************************************************************"""
 """pillow"""
 from PIL import Image
+import time
 
 def func_1():
     """缩放操作"""
@@ -58,22 +59,44 @@ def func_3():
 
     image.save('code1.jpg','jpeg')
 def func_4():
+    # """自定义图片验证码"""
+    # width = 60 * 4
+    # height = 60
+    # image = Image.new('RGB',(width,height),(255,255,255))
+    # #创建Font对象
+    # font = ImageFont.truetype('arial.ttf',36)
+    # #创建Draw对象
+    # draw = ImageDraw.Draw(image)
+    # #填充每个像素
+    # for x in range(width):
+    #     for y in range(height):
+    #         draw.point((x,y),fill=rndColor1())
     """自定义图片验证码（旋转）"""
     width = 60 * 4
     height = 60
     image = Image.new('RGB',(width,height),(255,255,255))
     char = Image.new('RGB',(30,60),(255,255,255))#只有此对象的实例可以旋转
     drawChar = ImageDraw.Draw(char)
-    font = ImageFont.truetype('arial.ttf', 36)
-    drawChar.text((10,10), rndChar(), font=font, fill=rndColor2())
-    char = char.rotate(45)
-    #只旋转文字的方法------>不然会有背景跟着旋转
-    r,g,b = char.split()
-    image.paste(char,(15,15),r)
-    image.paste(char,(15,15),g)
-    image.paste(char,(15,15),b)
+    font = ImageFont.truetype('arial.ttf', 15)
 
-    image.save('code2.jpg','jpeg')
+
+
+    def draw1(t,content,char):
+        drawChar.text((60 * t + 15,20), content, font=font, fill=rndColor2())
+        char = char.rotate(45)
+        #只旋转文字的方法------>不然会有背景跟着旋转
+        r,g,b = char.split()
+        image.paste(char,(60 * t,20),r)
+        image.paste(char,(60 * t,20),g)
+        image.paste(char,(60 * t,20),b)
+
+    for t in range(4):
+        r1 = rndChar()
+        draw1(t,r1,char)
+    # for t in range(4):
+    #     char.text((60 * t + 15,10),rndChar(),font=font,fill=rndColor2())
+
+    image.save('code4.jpg','jpeg')
 
 """request"""
 pass
@@ -102,4 +125,4 @@ def func_5():
 
 
 if __name__ == '__main__':
-    func_5()
+    func_4()
