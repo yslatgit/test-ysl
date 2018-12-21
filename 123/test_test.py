@@ -5,5 +5,3 @@ for i in seq:
 
 print(sum)
 
-
-
